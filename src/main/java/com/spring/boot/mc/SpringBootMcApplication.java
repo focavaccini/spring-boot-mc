@@ -27,7 +27,7 @@ public class SpringBootMcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Category cat1 = new Category(null, "Officce");
+		Category cat1 = new Category(null, "Office");
 		Category cat2 = new Category(null, "Computers");
 		
 		
