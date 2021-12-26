@@ -1,5 +1,6 @@
 package com.spring.boot.mc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.spring.boot.mc.domain.Address;
 import com.spring.boot.mc.domain.Category;
 import com.spring.boot.mc.domain.City;
 import com.spring.boot.mc.domain.Client;
+import com.spring.boot.mc.domain.Order;
+import com.spring.boot.mc.domain.Payment;
+import com.spring.boot.mc.domain.PaymentWithBankSlip;
+import com.spring.boot.mc.domain.PaymentWithCard;
 import com.spring.boot.mc.domain.Product;
 import com.spring.boot.mc.domain.State;
 import com.spring.boot.mc.domain.enums.CustomerType;
+import com.spring.boot.mc.domain.enums.PaymentState;
 import com.spring.boot.mc.repositories.AddressRepository;
 import com.spring.boot.mc.repositories.CategoryRepository;
 import com.spring.boot.mc.repositories.CityRepository;
 import com.spring.boot.mc.repositories.ClientRepository;
+import com.spring.boot.mc.repositories.OrderRepository;
+import com.spring.boot.mc.repositories.PaymentRepository;
 import com.spring.boot.mc.repositories.ProductRepository;
 import com.spring.boot.mc.repositories.StateRepository;
 
@@ -41,6 +49,12 @@ public class SpringBootMcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private AddressRepository addressRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootMcApplication.class, args);
@@ -94,6 +108,23 @@ public class SpringBootMcApplication implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(a1, a2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Order or1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
+		Order or2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, a2);
+		
+		Payment pay1 = new PaymentWithCard(null, PaymentState.SETTLED, or1, 6);
+		or1.setPayment(pay1);
+		
+		Payment pay2 = new PaymentWithBankSlip(null, PaymentState.PENDING, or2, sdf.parse("20/10/2017 00:00"), null);
+		or2.setPayment(pay2);
+		
+		cli1.getOrders().addAll(Arrays.asList(or1, or2));
+		
+		orderRepository.saveAll(Arrays.asList(or1, or2));
+		
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 
 }
