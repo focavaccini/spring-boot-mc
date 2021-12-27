@@ -7,6 +7,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_orderedItem")
 public class OrderedItem implements Serializable{
@@ -14,6 +16,7 @@ public class OrderedItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
+	@JsonIgnore
 	private OrderedItemPK id = new OrderedItemPK();
 	
 	private Double discount;
@@ -33,6 +36,7 @@ public class OrderedItem implements Serializable{
 		this.price = price;
 	}
 
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
