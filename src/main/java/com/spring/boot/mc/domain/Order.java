@@ -2,7 +2,9 @@ package com.spring.boot.mc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,6 +38,9 @@ public class Order implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;
+	
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderedItem> items = new HashSet<>();
 	
 	public Order() {
 		// TODO Auto-generated constructor stub
@@ -86,6 +92,14 @@ public class Order implements Serializable{
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	
+	public Set<OrderedItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderedItem> items) {
+		this.items = items;
 	}
 	
 	@Override

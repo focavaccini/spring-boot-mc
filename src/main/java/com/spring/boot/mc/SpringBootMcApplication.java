@@ -13,6 +13,7 @@ import com.spring.boot.mc.domain.Category;
 import com.spring.boot.mc.domain.City;
 import com.spring.boot.mc.domain.Client;
 import com.spring.boot.mc.domain.Order;
+import com.spring.boot.mc.domain.OrderedItem;
 import com.spring.boot.mc.domain.Payment;
 import com.spring.boot.mc.domain.PaymentWithBankSlip;
 import com.spring.boot.mc.domain.PaymentWithCard;
@@ -25,6 +26,7 @@ import com.spring.boot.mc.repositories.CategoryRepository;
 import com.spring.boot.mc.repositories.CityRepository;
 import com.spring.boot.mc.repositories.ClientRepository;
 import com.spring.boot.mc.repositories.OrderRepository;
+import com.spring.boot.mc.repositories.OrderedItemRepository;
 import com.spring.boot.mc.repositories.PaymentRepository;
 import com.spring.boot.mc.repositories.ProductRepository;
 import com.spring.boot.mc.repositories.StateRepository;
@@ -55,6 +57,9 @@ public class SpringBootMcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private OrderedItemRepository orderedItemRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootMcApplication.class, args);
@@ -125,6 +130,19 @@ public class SpringBootMcApplication implements CommandLineRunner {
 		orderRepository.saveAll(Arrays.asList(or1, or2));
 		
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
+		OrderedItem oi1 = new OrderedItem(or1, p1, 0.00, 1, 2000.00);
+		OrderedItem oi2 = new OrderedItem(or1, p3, 0.00, 2, 80.00);
+		OrderedItem oi3 = new OrderedItem(or2, p2, 100.00, 1, 800.00);
+		
+		or1.getItems().addAll(Arrays.asList(oi1, oi2));
+		or2.getItems().addAll(Arrays.asList(oi3));
+		
+		p1.getItems().addAll(Arrays.asList(oi1));
+		p2.getItems().addAll(Arrays.asList(oi3));
+		p3.getItems().addAll(Arrays.asList(oi2));
+		
+		orderedItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
 	}
 
 }
