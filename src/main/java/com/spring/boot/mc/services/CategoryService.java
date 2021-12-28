@@ -1,5 +1,6 @@
 package com.spring.boot.mc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,9 @@ public class CategoryService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Cannot delete a category that contains products");
 		}
+	}
+	
+	public List<Category> findAll(){
+		return categoryRepository.findAll();
 	}
 }
