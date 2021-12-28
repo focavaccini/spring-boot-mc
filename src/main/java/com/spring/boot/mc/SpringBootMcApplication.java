@@ -69,6 +69,12 @@ public class SpringBootMcApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Category cat1 = new Category(null, "Office");
 		Category cat2 = new Category(null, "Computers");
+		Category cat3 = new Category(null, "Tools");
+		Category cat4 = new Category(null, "Eletronics");
+		Category cat5 = new Category(null, "Toys");
+		Category cat6 = new Category(null, "School");
+		Category cat7 = new Category(null, "Mechanics");
+		Category cat8 = new Category(null, "Construction");
 		
 		
 		
@@ -86,7 +92,7 @@ public class SpringBootMcApplication implements CommandLineRunner {
 		p3.getCategory().addAll(Arrays.asList(cat2));
 		
 	
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
 		State st1 = new State(null, "Minas Gerais");
