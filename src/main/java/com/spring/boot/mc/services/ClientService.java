@@ -10,8 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.spring.boot.mc.domain.Address;
+import com.spring.boot.mc.domain.City;
 import com.spring.boot.mc.domain.Client;
+import com.spring.boot.mc.domain.enums.CustomerType;
 import com.spring.boot.mc.dto.ClientDTO;
+import com.spring.boot.mc.dto.ClientNewDTO;
+import com.spring.boot.mc.repositories.AddressRepository;
 import com.spring.boot.mc.repositories.ClientRepository;
 import com.spring.boot.mc.services.exceptions.DataIntegrityException;
 import com.spring.boot.mc.services.exceptions.ObjectNotFoundException;
@@ -22,9 +27,19 @@ public class ClientService {
 	@Autowired
 	ClientRepository clientRepository;
 	
+	@Autowired
+	AddressRepository addressRepository;
+	
 	public Client findById(Integer id) {
 		Optional<Client> obj =  clientRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id " + id + ", Type: " + Client.class.getName()));
+	}
+	
+	public Client insert(Client obj) {
+		obj.setId(null);
+		obj = clientRepository.save(obj);
+		addressRepository.saveAll(obj.getAdresses());
+		return obj;
 	}
 	
 	public Client update(Client obj) {
@@ -56,6 +71,24 @@ public class ClientService {
 	
 	public Client fromDTO(ClientDTO objDto) {
 		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+	}
+	
+	public Client fromDTO(ClientNewDTO objDto) {
+		Client client = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOuCnpj(), CustomerType.toEnum(objDto.getType()));
+		City cit = new City(objDto.getCityId(), null, null);
+		Address address = new Address(null, objDto.getStreet(), objDto.getNumber(), objDto.getComplement(), objDto.getNeighborhood(), objDto.getCep(), client, cit);
+		client.getAdresses().add(address);
+		client.getPhones().add(objDto.getPhone1());
+		
+		if(objDto.getPhone2() != null) {
+			client.getPhones().add(objDto.getPhone2());
+		}
+		
+		if(objDto.getPhone3() != null) {
+			client.getPhones().add(objDto.getPhone3());
+		}
+		
+		return client;
 	}
 	
 	private void updateData(Client newObj, Client obj) {
