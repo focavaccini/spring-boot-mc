@@ -2,16 +2,33 @@ package com.spring.boot.mc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.spring.boot.mc.services.validation.InsertClient;
+
+@InsertClient
 public class ClientNewDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message = "Mandatory completion")
+	@Length(min = 5, max = 120, message =  "Size must be between 5 and 120 characters")
 	private String name;
+	
+	@NotEmpty(message = "Mandatory completion")
+	@Email(message = "Invalid email")
 	private String email;
+	
+	@NotEmpty
 	private String cpfOuCnpj;
 	private Integer type;
 	
+	@NotEmpty
 	private String street;
+	@NotEmpty
 	private String number;
 	private String complement;
 	private String neighborhood;
@@ -19,6 +36,7 @@ public class ClientNewDTO implements Serializable{
 	
 	private Integer cityId;
 	
+	@NotEmpty
 	private String phone1;
 	private String phone2;
 	private String phone3;
