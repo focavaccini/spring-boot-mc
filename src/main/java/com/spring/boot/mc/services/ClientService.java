@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.boot.mc.domain.Address;
 import com.spring.boot.mc.domain.City;
@@ -35,6 +36,7 @@ public class ClientService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id " + id + ", Type: " + Client.class.getName()));
 	}
 	
+	@Transactional
 	public Client insert(Client obj) {
 		obj.setId(null);
 		obj = clientRepository.save(obj);
