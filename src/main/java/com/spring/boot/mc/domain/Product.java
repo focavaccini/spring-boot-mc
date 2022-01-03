@@ -33,8 +33,8 @@ public class Product implements Serializable{
 	
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> category = new ArrayList<>();
+	@JoinTable(name = "tb_product_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "categories_id"))
+	private List<Category> categories = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.product")
@@ -84,12 +84,12 @@ public class Product implements Serializable{
 		this.price = price;
 	}
 
-	public List<Category> getCategory() {
-		return category;
+	public List<Category> getCategories() {
+		return categories;
 	}
 
-	public void setCategory(List<Category> category) {
-		this.category = category;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public Set<OrderedItem> getItems() {

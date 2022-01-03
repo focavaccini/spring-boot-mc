@@ -20,7 +20,7 @@ import com.spring.boot.mc.services.exceptions.ObjectNotFoundException;
 public class CategoryService {
 	
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 	
 	public Category findById(Integer id) {
 		Optional<Category> obj =  categoryRepository.findById(id);

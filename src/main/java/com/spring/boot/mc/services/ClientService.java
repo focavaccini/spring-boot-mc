@@ -26,10 +26,10 @@ import com.spring.boot.mc.services.exceptions.ObjectNotFoundException;
 public class ClientService {
 	
 	@Autowired
-	ClientRepository clientRepository;
+	private ClientRepository clientRepository;
 	
 	@Autowired
-	AddressRepository addressRepository;
+	private AddressRepository addressRepository;
 	
 	public Client findById(Integer id) {
 		Optional<Client> obj =  clientRepository.findById(id);

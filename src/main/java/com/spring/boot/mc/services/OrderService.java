@@ -13,10 +13,10 @@ import com.spring.boot.mc.services.exceptions.ObjectNotFoundException;
 public class OrderService {
 	
 	@Autowired
-	OrderRepository categoryRepository;
+	private OrderRepository orderRepository;
 	
 	public Order findById(Integer id) {
-		Optional<Order> obj =  categoryRepository.findById(id);
+		Optional<Order> obj =  orderRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id " + id + ", Type: " + Order.class.getName()));
 	}
 }
