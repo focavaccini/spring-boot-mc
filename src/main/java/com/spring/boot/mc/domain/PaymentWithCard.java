@@ -3,10 +3,12 @@ package com.spring.boot.mc.domain;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.spring.boot.mc.domain.enums.PaymentState;
 
 @Entity
 @Table(name = "tb_payment_with_card")
+@JsonTypeName("paymentWithCard")
 public class PaymentWithCard extends Payment{
 
 	private static final long serialVersionUID = 1L;

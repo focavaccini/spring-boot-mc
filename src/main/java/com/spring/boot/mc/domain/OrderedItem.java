@@ -41,12 +41,19 @@ public class OrderedItem implements Serializable{
 		return id.getOrder();
 	}
 	
+	public void setOrder(Order order) {
+		id.setOrder(order);
+	}
 	public Double getSubTotal() {
 		return (price - discount) * quantity;
 	}
 	
 	public Product getProduct() {
 		return id.getProduct();
+	}
+	
+	public void setProduct(Product product) {
+		id.setProduct(product);
 	}
 	
 	public OrderedItemPK getId() {
