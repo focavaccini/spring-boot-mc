@@ -1,20 +1,25 @@
 package com.spring.boot.mc.domain.enums;
 
 public enum PaymentState {
-	PENDING(1),
-	SETTLED(2),
-	CALLED_OFF(3);
+	PENDING(1, "Pendente"),
+	SETTLED(2, "Quitado"),
+	CALLED_OFF(3, "Cancelado");
 	
-	int code;
+	private int code;
+	private String description;
 	
-	private PaymentState(int code) {
+	private PaymentState(int code, String description) {
 		this.code = code;
+		this.description = description;
 	}
 	
 	public int getCode() {
 		return code;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
 	public static PaymentState toEnum(Integer code) {
 		if(code == null) {
 			return null;

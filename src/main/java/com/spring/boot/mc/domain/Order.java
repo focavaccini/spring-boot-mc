@@ -1,8 +1,11 @@
 package com.spring.boot.mc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -130,6 +133,30 @@ public class Order implements Serializable{
 			return false;
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss"); 
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Número do pedido: ");
+		builder.append(getId());
+		builder.append(", Instate do pedido: ");
+		builder.append(sdf.format(getInstant()));
+		builder.append(", Cliente: ");
+		builder.append(getClient().getName());
+		builder.append(", Situação de pagamento: ");
+		builder.append(getPayment().getPaymentState().getDescription());
+		builder.append("\n Detalhes: \n");
+		for(OrderedItem  x : getItems()) {
+			builder.append(x.toString());
+		}
+		builder.append("Valor total: ");
+		builder.append(nf.format(getTotalValue()));
+		return builder.toString();
 	}
 
 			
