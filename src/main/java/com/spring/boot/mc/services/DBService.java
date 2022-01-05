@@ -71,18 +71,18 @@ public class DBService {
 		Category cat8 = new Category(null, "Construction");
 		
 
-		Product p1 = new Product(null, "Computer", 2000.0);
-		Product p2 = new Product(null, "Printer", 800.0);
+		Product p1 = new Product(null, "Computador", 2000.0);
+		Product p2 = new Product(null, "Impressora", 800.0);
 		Product p3 = new Product(null, "Mouse", 80.0);
-		Product p4 = new Product(null, "Drilling machine", 200.0);
-		Product p5 = new Product(null, "Pan", 25.0);
-		Product p6 = new Product(null, "Cell", 800.0);
-		Product p7 = new Product(null, "Remote control car", 80.0);
-		Product p8 = new Product(null, "Book", 20.0);
-		Product p9 = new Product(null, "Pen", 2.0);
-		Product p10 = new Product(null, "Wrench", 25.0);
-		Product p11 = new Product(null, "Stuffed", 35.0);
-		Product p12 = new Product(null, "Pushcard", 180.0);
+		Product p4 = new Product(null, "Furadeira", 200.0);
+		Product p5 = new Product(null, "Pá", 25.0);
+		Product p6 = new Product(null, "Celular", 800.0);
+		Product p7 = new Product(null, "Carrinho de controle remoto", 80.0);
+		Product p8 = new Product(null, "Livro", 20.0);
+		Product p9 = new Product(null, "Caneta", 2.0);
+		Product p10 = new Product(null, "Chave inglesa", 25.0);
+		Product p11 = new Product(null, "Enxada", 35.0);
+		Product p12 = new Product(null, "Carrinho de mão", 180.0);
 		
 		
 		cat1.getProduct().addAll(Arrays.asList(p1, p2, p3, p8, p9));
@@ -149,7 +149,7 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(st1, st2, st3, st4, st5, st6, st7, st8, st9));
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3, cit4, cit5, cit6, cit7, cit8, cit9, cit10, cit11, cit12));
 		
-		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", CustomerType.PHYSICAL_PERSON);
+		Client cli1 = new Client(null, "Fernando Cavaccini", "fernandocavaccini@gmail.com", "36378912377", CustomerType.PHYSICAL_PERSON);
 		Client cli2 = new Client(null, "José Silva", "jose@gmail.com", "32154874693125", CustomerType.LEGAL_PERSON);
 		Client cli3 = new Client(null, "Bernardo Ramos", "barnardo@gmail.com", "78945612398", CustomerType.PHYSICAL_PERSON);
 		Client cli4 = new Client(null, "Lucas Rosa", "lucas@gmail.com", "45612378945", CustomerType.PHYSICAL_PERSON);

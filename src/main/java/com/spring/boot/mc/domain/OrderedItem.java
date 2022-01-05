@@ -114,7 +114,7 @@ public class OrderedItem implements Serializable{
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append(getProduct().getName());
-		builder.append(", Quantidade: ");
+		builder.append(" - Quantidade: ");
 		builder.append(getQuantity());
 		builder.append(", Preço unitário: ");
 		builder.append(nf.format(getPrice()));
