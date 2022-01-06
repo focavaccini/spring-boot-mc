@@ -6,12 +6,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.boot.mc.domain.enums.CustomerType;
+import com.spring.boot.mc.domain.enums.Profile;
 
 @Entity
 @Table(name = "tb_client")
@@ -48,12 +51,16 @@ public class Client implements Serializable {
 	@CollectionTable(name = "tb_phone")
 	private Set<String> phones = new HashSet<>();
 	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "tb_profile")
+	private Set<Integer> profiles = new HashSet<>(); 
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
 	public Client() {
-		
+		addProfile(Profile.CLIENT);
 	}
 
 	public Client(Integer id, String name, String email, String cpfOuCnpj, CustomerType type, String password) {
@@ -64,6 +71,7 @@ public class Client implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.type = (type == null) ? null : type.getCode();
 		this.password = password;
+		addProfile(Profile.CLIENT);
 	}
 
 	public Integer getId() {
@@ -115,6 +123,14 @@ public class Client implements Serializable {
 		this.password = password;
 	}
 
+	public Set<Profile> getProfiles(){
+		return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addProfile(Profile profile) {
+		profiles.add(profile.getCode());
+	}
+	
 	public List<Address> getAdresses() {
 		return adresses;
 	}
