@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.spring.boot.mc.domain.Address;
@@ -59,6 +60,9 @@ public class DBService {
 	
 	@Autowired
 	private OrderedItemRepository orderedItemRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCrypt;
 	
 	public void instantiatedDatabase() throws ParseException {
 		Category cat1 = new Category(null, "Office");
@@ -149,12 +153,12 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(st1, st2, st3, st4, st5, st6, st7, st8, st9));
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3, cit4, cit5, cit6, cit7, cit8, cit9, cit10, cit11, cit12));
 		
-		Client cli1 = new Client(null, "Fernando Cavaccini", "fernandocavaccini@gmail.com", "36378912377", CustomerType.PHYSICAL_PERSON);
-		Client cli2 = new Client(null, "José Silva", "jose@gmail.com", "32154874693125", CustomerType.LEGAL_PERSON);
-		Client cli3 = new Client(null, "Bernardo Ramos", "barnardo@gmail.com", "78945612398", CustomerType.PHYSICAL_PERSON);
-		Client cli4 = new Client(null, "Lucas Rosa", "lucas@gmail.com", "45612378945", CustomerType.PHYSICAL_PERSON);
-		Client cli5 = new Client(null, "Pedro Benedito", "pedro@gmail.com", "95487854784236", CustomerType.LEGAL_PERSON);
-		Client cli6 = new Client(null, "João Lucas", "joão@gmail.com", "95175378159", CustomerType.PHYSICAL_PERSON);
+		Client cli1 = new Client(null, "Fernando Cavaccini", "fernandocavaccini@gmail.com", "36378912377", CustomerType.PHYSICAL_PERSON, bCrypt.encode("Fernando"));
+		Client cli2 = new Client(null, "José Silva", "jose@gmail.com", "32154874693125", CustomerType.LEGAL_PERSON, bCrypt.encode("1235@"));
+		Client cli3 = new Client(null, "Bernardo Ramos", "barnardo@gmail.com", "78945612398", CustomerType.PHYSICAL_PERSON, bCrypt.encode("1236@"));
+		Client cli4 = new Client(null, "Lucas Rosa", "lucas@gmail.com", "45612378945", CustomerType.PHYSICAL_PERSON, bCrypt.encode("1237@"));
+		Client cli5 = new Client(null, "Pedro Benedito", "pedro@gmail.com", "95487854784236", CustomerType.LEGAL_PERSON, bCrypt.encode("1238@"));
+		Client cli6 = new Client(null, "João Lucas", "joão@gmail.com", "95175378159", CustomerType.PHYSICAL_PERSON, bCrypt.encode("1239@"));
 		
 		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 		cli2.getPhones().addAll(Arrays.asList("12597812"));

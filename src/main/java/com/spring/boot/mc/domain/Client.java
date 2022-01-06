@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,10 +31,14 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	
+	@Column(unique = true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer type;
 	
+	@JsonIgnore
+	private String password;
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> adresses = new ArrayList<>();
@@ -51,13 +56,14 @@ public class Client implements Serializable {
 		
 	}
 
-	public Client(Integer id, String name, String email, String cpfOuCnpj, CustomerType type) {
+	public Client(Integer id, String name, String email, String cpfOuCnpj, CustomerType type, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.type = (type == null) ? null : type.getCode();
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -98,6 +104,15 @@ public class Client implements Serializable {
 
 	public void setType(CustomerType type) {
 		this.type = type.getCode();
+	}
+
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<Address> getAdresses() {
