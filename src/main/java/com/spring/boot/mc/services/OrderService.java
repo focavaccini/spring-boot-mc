@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.spring.boot.mc.domain.Client;
 import com.spring.boot.mc.domain.Order;
 import com.spring.boot.mc.domain.OrderedItem;
 import com.spring.boot.mc.domain.PaymentWithBankSlip;
@@ -13,6 +17,8 @@ import com.spring.boot.mc.domain.enums.PaymentState;
 import com.spring.boot.mc.repositories.OrderRepository;
 import com.spring.boot.mc.repositories.OrderedItemRepository;
 import com.spring.boot.mc.repositories.PaymentRepository;
+import com.spring.boot.mc.security.UserSS;
+import com.spring.boot.mc.services.exceptions.AuthorizationException;
 import com.spring.boot.mc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -68,5 +74,18 @@ public class OrderService {
 		orderedItemRepository.saveAll(obj.getItems());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public Page<Order> findByPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Client client = clientService.findById(user.getId());
+		
+		return orderRepository.findByClient(client, pageRequest);
 	}
 }
