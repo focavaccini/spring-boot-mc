@@ -16,10 +16,13 @@ import com.spring.boot.mc.domain.Address;
 import com.spring.boot.mc.domain.City;
 import com.spring.boot.mc.domain.Client;
 import com.spring.boot.mc.domain.enums.CustomerType;
+import com.spring.boot.mc.domain.enums.Profile;
 import com.spring.boot.mc.dto.ClientDTO;
 import com.spring.boot.mc.dto.ClientNewDTO;
 import com.spring.boot.mc.repositories.AddressRepository;
 import com.spring.boot.mc.repositories.ClientRepository;
+import com.spring.boot.mc.security.UserSS;
+import com.spring.boot.mc.services.exceptions.AuthorizationException;
 import com.spring.boot.mc.services.exceptions.DataIntegrityException;
 import com.spring.boot.mc.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,13 @@ public class ClientService {
 	private BCryptPasswordEncoder bCrypt;
 	
 	public Client findById(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Client> obj =  clientRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id " + id + ", Type: " + Client.class.getName()));
 	}
