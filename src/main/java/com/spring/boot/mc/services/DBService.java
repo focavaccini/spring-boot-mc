@@ -159,7 +159,7 @@ public class DBService {
 		Client cli3 = new Client(null, "Bernardo Ramos", "barnardo@gmail.com", "95788338000166", CustomerType.LEGAL_PERSON, bCrypt.encode("1236@"));
 		Client cli4 = new Client(null, "Lucas Rosa", "lucas@gmail.com", "41908533056", CustomerType.PHYSICAL_PERSON, bCrypt.encode("1237@"));
 		Client cli5 = new Client(null, "Pedro Benedito", "pedro@gmail.com", "78624441000151", CustomerType.LEGAL_PERSON, bCrypt.encode("1238@"));
-		Client cli6 = new Client(null, "João Lucas", "joão@gmail.com", "07701472088", CustomerType.PHYSICAL_PERSON, bCrypt.encode("1239@"));
+		Client cli6 = new Client(null, "João Lucas", "joao@gmail.com", "07701472088", CustomerType.PHYSICAL_PERSON, bCrypt.encode("1239@"));
 		
 		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 		cli2.getPhones().addAll(Arrays.asList("12597812"));
