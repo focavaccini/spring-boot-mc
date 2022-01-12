@@ -1,7 +1,5 @@
 package com.spring.boot.mc.resources;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
