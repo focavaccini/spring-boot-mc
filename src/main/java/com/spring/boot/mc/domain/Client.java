@@ -35,8 +35,6 @@ public class Client implements Serializable {
 	private Integer id;
 	private String name;
 	
-	private String urlImage;
-	
 	@Column(unique = true)
 	private String email;
 	private String cpfOuCnpj;
@@ -172,14 +170,6 @@ public class Client implements Serializable {
 			return false;
 		Client other = (Client) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	public String getUrlImage() {
-		return urlImage;
-	}
-
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
 	}
 
 }
