@@ -36,7 +36,13 @@ public class ClientResource {
 		Client obj = service.findById(id);
 		
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(value="/email")
+	public ResponseEntity<Client>findByEmail(@RequestParam(value="value") String email){
+		Client obj = service.findByEmail(email);
 		
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
